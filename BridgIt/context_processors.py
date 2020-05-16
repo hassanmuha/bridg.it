@@ -1,4 +1,4 @@
 def function_name(request):
-    hworld = 'Hello World'
+    GlobSession = 'Session'
     # all stuff that you want to make available
-    return {'hworld':hworld}
+    return {'GlobSession':GlobSession}
