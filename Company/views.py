@@ -46,8 +46,31 @@ class CompanyView(TemplateView):
         arg={'form':form, 'text':text}
         return render(request, self.template_name, arg)
 
+
+
 def compSave(request):
-     return render(request, 'Company/saved.html')
+    client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
+    db=client.get_database('bridgit')
+    records=db.companies
+
+    new_Company={
+            'name' : "ABC Co.",
+            'twitter_usrname' : "ABC co.",
+            'category_code' : "1213",
+            'number of employees' : "95",
+            'founded year' : "2020",
+            'founded month' : "01",
+            'email address': "info@ABC.com",
+            'phone' : "000000000",
+            'desription' : "TomTim co.",
+            'overview' : "It is a division of XYZ company. It deals with making of Color sche...",
+            'relationships': "Brother",
+            'products':"Brick",
+        }
+    records.insert_one(new_Company)
+
+    return HttpResponse("Company Saved")
+
 
 # def index(request):
 #     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
@@ -56,6 +79,20 @@ def compSave(request):
 #     conArr = records.count_documents({})
 #     absd="this is test"
 #     return render(request, 'Company/index.html', {'absd':absd})
+
+
+def findByName(request):
+
+    cNameQuery={ "name": "bridgit Co." }
+    client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
+    db=client.get_database('bridgit')
+    records=db.companies
+    firstData= records.find_one()
+
+
+    return HttpResponse("HTML Tem will add here...... for Company/products")
+
+
 
 
 def companies(request):
@@ -87,7 +124,7 @@ def companies(request):
     return HttpResponse("HTML Tem will add here...... for Company/products")
 
 def delete(request):
-    myquery = { "name": "Alex" }
+    myquery = { "name": "Hassan" }
 
     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
     db=client.get_database('bridgit')
@@ -98,15 +135,14 @@ def delete(request):
 
 
 def update(request):
-    myquery = { "name": "Alex" }
+    myquery = { "name": "Muhammad" }
 
     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
     db=client.get_database('bridgit')
     records=db.companies
 
-    copData = records.find_one(myquery)
 
-    newvalues = { "$set": {  'name' : "Muhammad",
+    newvalues = { "$set": {  'name' : "Muhammad Hassan",
                              'twitter_usrname' : "Hassan",
                              'category_code' : "1213",
                              'number of employees' : "95",
@@ -119,6 +155,6 @@ def update(request):
                              'relationships': "Brother",
                              'products':"Brick"
                  } }
-    records.update_one(copData, newvalues)
+    records.update_one(myquery, newvalues)
 
     return HttpResponse("Updated")

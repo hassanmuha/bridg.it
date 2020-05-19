@@ -8,5 +8,6 @@ urlpatterns = [
     # path('', views.index,name='index'),
     path('companies/',views.companies, name='companies'), 
     path('delete/',views.delete, name='delete'),
-    path('update/',views.update, name='update')   
+    path('update/',views.update, name='update'),
+    path('compSave/',views.compSave,name='compSave'),  
 ]

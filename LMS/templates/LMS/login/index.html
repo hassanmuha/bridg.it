@@ -1,7 +1,10 @@
+{% comment %} {% load static from staticfiles %} {% endcomment %}
+{% load static %}
+
 <html>
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
         <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" >
@@ -14,7 +17,7 @@
 <body>
   <section id="nav-bar">
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><img src="images/smlogo.png"></a>
+        <a class="navbar-brand" href="#"><img src="{% static 'images/smlogo.png' %}"></a>
         <button class="navbar-toggler" 
         type="button" data-toggle="collapse"
         data-target="#navbarNav" 
@@ -104,10 +107,10 @@
     <div class="row force-to-bottom text center">
        <p>LOGIN WITH </p> <p>      </p>
       <div class="social-icons">
-      <a href="#"><img src="images/fb.png"></a>
-      <a href="#"><img src="images/google.png"></a>
-      <a href="#"><img src="images/linkedin.png"></a>
-      <a href="#"><img src="images/twitter.png"></a>
+      <a href="#"><img src="{% static 'images/fb.png' %}"></a>
+      <a href="#"><img src="{% static 'images/google.png' %}"></a>
+      <a href="#"><img src="{% static 'images/linkedin.png' %}"></a>
+      <a href="#"><img src="{% static 'images/twitter.png' %}"></a>
       
       </div>
    </div>
@@ -117,10 +120,10 @@
 <section id="social-media">
   <div class="footer">
     <div class="social-icons">
-      <a href="#"><img src="images/fb.png"></a>
-      <a href="#"><img src="images/google.png"></a>
-      <a href="#"><img src="images/linkedin.png"></a>
-      <a href="#"><img src="images/twitter.png"></a>
+      <a href="#"><img src="/Bridg.it/BridgIt/BridgIt/assets/images/fb.png"></a>
+      <a href="#"><img src="{% static 'images/google.png' %}"></a>
+      <a href="#"><img src="{% static 'images/linkedin.png' %}"></a>
+      <a href="#"><img src="{% static 'images/twitter.png' %}"></a>
       </div>
   </div>
 </section>
