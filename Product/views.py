@@ -2,86 +2,67 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from pymongo import MongoClient
 from django.views.generic import TemplateView
-
-
+from .forms import HomeForm
 # Create your views here.
 
-def index(request):
-    return HttpResponse("HTML Tem will add here...... for Company/products")
 
+class ProductView(TemplateView):
+    template_name='Product/index.html'
+    
+    def get(self, request):
+        form = HomeForm()
+        return render(request, self.template_name, {'form':form})
 
-def compSave(request):
-     return render(request, 'Company/saved.html')
+    def post(self, request):
+        form = HomeForm(request.POST)
+        if form.is_valid():
+            text=form.cleaned_data['post']
 
-# def index(request):
-#     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
-#     db=client.get_database('bridgit')
-#     records=db.companies
-#     conArr = records.count_documents({})
-#     absd="this is test"
-#     return render(request, 'Company/index.html', {'absd':absd})
+        return redirect("products")
 
+        arg={'form':form, 'text':text}
+        return render(request, self.template_name, arg)
+
+def prodSave(request):
+    return render(request, 'Product/saved.html')
 
 def products(request):
     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
     db=client.get_database('bridgit')
-    records=db.companies
+    records=db.products
     firstData= records.find_one()
 
-    arrComp=[]
+    arrProd=[]
     for x in records.find():
-        arrComp.append(x)
-
-    # new_Company={
-    #     'name' : "Alex",
-    #     'twitter_usrname' : "Pettter",
-    #     'category_code' : "1213",
-    #     'number of employees' : "95",
-    #     'founded year' : "2020",
-    #     'founded month' : "01",
-    #     'email address': "info@alex.com",
-    #     'phone' : "000000000",
-    #     'desription' : "Alec co.",
-    #     'overview' : "It is a division of XYZ company. It deals with making of Color sche...",
-    #     'relationships': "Brother",
-    #     'products':"Brick"
-    # }
-
-   # records.insert_one(new_Company)
+        arrProd.append(x)
     return HttpResponse("HTML Tem will add here...... for Company/products")
-
+        
 def delete(request):
-    myquery = { "name": "Hassan" }
+    myquery = { "name": "Brick" }
 
     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
     db=client.get_database('bridgit')
-    records=db.companies
+    records=db.products
     conArr = records.delete_one(myquery)
 
     return HttpResponse("Deleted")
 
-
 def update(request):
-    myquery = { "name": "Muhammad" }
+    myquery = { "name": "Brick" }
 
     client=MongoClient('mongodb+srv://morisha:bridgit@bridgit-euhfa.mongodb.net/test?retryWrites=true&w=majority')
     db=client.get_database('bridgit')
-    records=db.companies
+    records=db.products
 
+    copData = records.find_one(myquery)
 
-    newvalues = { "$set": {  'name' : "Muhammad Hassan",
-                             'twitter_usrname' : "Hassan",
-                             'category_code' : "1213",
-                             'number of employees' : "95",
-                             'founded year' : "2020",
-                             'founded month' : "01",
-                             'email address': "info@alex.com",
-                             'phone' : "000000000",
-                             'desription' : "Hassan co.",
-                             'overview' : "It is a division of XYZ company. It deals with making of Color sche...",
-                             'relationships': "Brother",
-                             'products':"Brick"
+    newvalues = { "$set": {  'name' : "Brick",
+                             'productCode' : "789",
+                             'manufacturedYear' : "2020",
+                             'manufacturedMonth' : "02",
+                             'description' : "It is a brick updated description"
                  } }
-    records.update_one(myquery, newvalues)
+    records.update_one(copData, newvalues)
 
-    return HttpResponse("Updated")
+    return HttpResponse("This is the products Updated page")
+

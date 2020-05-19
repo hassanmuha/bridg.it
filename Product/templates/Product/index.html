@@ -1,6 +1,23 @@
+{% comment %} {% extends 'base.py' %} {% endcomment %}
+
+{% block body %}
+
 <h1>
-    Product Home
+    Home of Product
 </h1>
 <h2>
-    Product Details wlll be here
+    Products will be here index
 </h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% comment %} <input type="text" name="testfield" />
+
+        <input type="text" value="{{ absd }}"/> {% endcomment %}
+
+        {{form.as_p}} 
+
+        <input type="submit" value='Post'/>
+    </form>
+{% endblock %}
+
